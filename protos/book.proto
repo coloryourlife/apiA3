@@ -15,9 +15,6 @@ enum Status {
 		TAKEN = 1;
 }
 
-message GetBookRequest {
-	string ISBN = 1;
-}
 message Book {
 	string ISBN = 1;
 	string title = 2;
@@ -32,6 +29,10 @@ message CreateBookRequest {
 
 message CreateBookResponse {
 	string responseMsg = 1;
+}
+
+message GetBookRequest {
+	string ISBN = 1;
 }
 
 message GetBookResponse {
