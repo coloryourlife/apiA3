@@ -1,6 +1,5 @@
-from apps.service import bookInventory_pb2_grpc, bookInventory_pb2
+from service import bookInventory_pb2_grpc, bookInventory_pb2
 import grpc
-import sys
 
 
 class InventoryClient:
