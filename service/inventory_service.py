@@ -1,16 +1,20 @@
+from pathlib import Path
+import sys
+sys.path.append(str(Path(__file__).parent.parent))  # To resolve module not found error
+
 from concurrent import futures
 import logging
 
 import grpc
 
-from bookInventory_pb2 import (
+from service.bookInventory_pb2 import (
     Genre,
     Book,
     ResponseStatus,
     GetBookResponse,
     CreateBookResponse
 )
-import bookInventory_pb2_grpc
+from service import bookInventory_pb2_grpc
 
 books = {
     "978-1-60309-502-0": Book(ISBN="978-1-60309-502-0", title="Animal Stories", author="Peter Hoey", genre=Genre.DRAMA, publishing_year=2022),

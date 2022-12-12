@@ -1,4 +1,9 @@
-import inventory_client
+from pathlib import Path
+
+import sys
+sys.path.append(str(Path(__file__).parent.parent))  # To resolve module not found error
+
+from client import inventory_client
 import logging
 
 isbns = ["978-1-60309-502-0", "978-1-60309-454-2"]

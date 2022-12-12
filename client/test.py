@@ -1,7 +1,10 @@
+from pathlib import Path
+import sys
+sys.path.append(str(Path(__file__).parent.parent))
 from unittest.mock import patch, MagicMock
-from book_pb2 import Genre, Book, GetBookResponse
-from inventory_client import InventoryClient
-from get_book_titles import get_book_titles
+from service.bookInventory_pb2 import Genre, Book, GetBookResponse
+from client.inventory_client import InventoryClient
+from client.get_book_titles import get_book_titles
 import unittest
 
 test_book1 = Book(ISBN="test1", title="test1 title", author="test1 author", genre=Genre.COMEDY, publishing_year=2021)
