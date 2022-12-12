@@ -1,6 +1,7 @@
 from pathlib import Path
 import sys
-sys.path.append(str(Path(__file__).parent.parent))
+sys.path.append(str(Path(__file__).parent.parent))  # Add path for finding parent module
+
 from unittest.mock import patch, MagicMock
 from service.bookInventory_pb2 import Genre, Book, GetBookResponse
 from client.inventory_client import InventoryClient
