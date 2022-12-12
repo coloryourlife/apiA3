@@ -23,12 +23,17 @@ message Book {
 	int32 publishing_year = 5;
 }
 
+message ResponseStatus {
+	int32 code = 1;
+	string message = 2;
+}
+
 message CreateBookRequest {
 	Book bookDetail = 1;
 }
 
 message CreateBookResponse {
-	string responseMsg = 1;
+	ResponseStatus status = 1;
 }
 
 message GetBookRequest {
@@ -37,12 +42,13 @@ message GetBookRequest {
 
 message GetBookResponse {
 	Book bookDetail = 1;
+	ResponseStatus status = 2;
 }
 
 message InventoryItem {
 	int32 inventory_number = 1;
-	oneof book {
-		Book item = 2;
+	oneof item {
+		Book book = 2;
 	}
 	Status status = 3;
 }
