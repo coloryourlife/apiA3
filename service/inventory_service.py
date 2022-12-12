@@ -3,13 +3,14 @@ import logging
 
 import grpc
 
-from book_pb2 import (
+from bookInventory_pb2 import (
     Genre,
     Book,
+    ResponseStatus,
     GetBookResponse,
     CreateBookResponse
 )
-import book_pb2_grpc
+import bookInventory_pb2_grpc
 
 books = {
     "978-1-60309-502-0": Book(ISBN="978-1-60309-502-0", title="Animal Stories", author="Peter Hoey", genre=Genre.DRAMA, publishing_year=2022),
@@ -17,20 +18,34 @@ books = {
 }
 
 
-class InventoryServicer(book_pb2_grpc.InventoryServiceServicer):
+class InventoryServicer(bookInventory_pb2_grpc.InventoryServiceServicer):
+    """
+    GetBook(self, request, context)
+    If the given ISBN is not found in our storage return GetBookResponse with a 404 error message
+    Else return GetBookResponse with bookDetail
+    """
     def GetBook(self, request, context):
         if request.ISBN not in books:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Book not found")
+            return GetBookResponse(bookDetail=None, status=ResponseStatus(code=404, message="Book not found"))
 
         book = books.get(request.ISBN)
 
-        return GetBookResponse(bookDetail=book)
+        return GetBookResponse(bookDetail=book, status=ResponseStatus(code=200, message="Successfully find"))
 
+    """
+    CreateBook(self, request, context)
+    if one of ISBN, author, title is empty return error message. (Assumed those three data is essential)
+    if given ISBN already exists in our storage return CreateBookResponse with a 403 error message
+    else create a book and store in our storage, return CreateBookResponse with success message
+    """
     def CreateBook(self, request, context):
         book_detail = request.bookDetail
 
+        if not(book_detail.ISBN and book_detail.author and book_detail.title):
+            return CreateBookResponse(status=ResponseStatus(code=406, message="Need more information"))
+
         if book_detail.ISBN in books:
-            context.abort(grpc.StatusCode.ALREADY_EXISTS, "Already exists")
+            return CreateBookResponse(status=ResponseStatus(code=403, message="Already exists"))
 
         new_book = Book(
             ISBN=book_detail.ISBN,
@@ -41,14 +56,13 @@ class InventoryServicer(book_pb2_grpc.InventoryServiceServicer):
         )
 
         books[book_detail.ISBN] = new_book
-        print(books)
 
-        return CreateBookResponse(responseMsg="Successfully Created")
+        return CreateBookResponse(status=ResponseStatus(code=200, message="Successfully created"))
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=3))
-    book_pb2_grpc.add_InventoryServiceServicer_to_server(
+    bookInventory_pb2_grpc.add_InventoryServiceServicer_to_server(
         InventoryServicer(), server
     )
     server.add_insecure_port("[::]:50051")

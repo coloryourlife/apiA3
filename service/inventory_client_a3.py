@@ -2,12 +2,12 @@ from __future__ import print_function
 
 import logging
 import grpc
-import book_pb2
-import book_pb2_grpc
+import bookInventory_pb2
+import bookInventory_pb2_grpc
 
 
 def get_book_detail(stub, isbn):
-    response = stub.GetBook(book_pb2.GetBookRequest(ISBN=isbn))
+    response = stub.GetBook(bookInventory_pb2.GetBookRequest(ISBN=isbn))
     print(response)
 
 
@@ -19,13 +19,13 @@ def create_new_book(stub):
         "genre": "HORROR",
         "publishing_year": 2020
     }
-    response = stub.CreateBook(book_pb2.CreateBookRequest(bookDetail=book_detail))
+    response = stub.CreateBook(bookInventory_pb2.CreateBookRequest(bookDetail=book_detail))
     print(response)
 
 
 def run():
     with grpc.insecure_channel('localhost:50051') as channel:
-        stub = book_pb2_grpc.InventoryServiceStub(channel)
+        stub = bookInventory_pb2_grpc.InventoryServiceStub(channel)
         print("--------------Book Detail--------------")
         get_book_detail(stub, '978-1-60309-454-2')
         print("--------------Create Result--------------")
