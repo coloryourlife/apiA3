@@ -14,6 +14,7 @@ test_book2 = Book(ISBN="test2", title="test2 title", author="test2 author", genr
 
 class ClientTest(unittest.TestCase):
 	"""
+	Unit test with client Mock
 	Implemented mock API client with @patch annotation and passed it to the unit test
 	Set get_book_details return value with side_effect since it should be called more than one with different return values
 	"""
