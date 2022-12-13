@@ -1,59 +1,59 @@
 syntax = "proto3";
 
 enum Genre {
-	ACTION = 0;
-	COMEDY = 1;
-	DRAMA = 2;
-	FANTASY = 3;
-	HORROR = 4;
-	MYSTERY = 5;
-	ROMANCE = 6;
+  ACTION = 0;
+  COMEDY = 1;
+  DRAMA = 2;
+  FANTASY = 3;
+  HORROR = 4;
+  MYSTERY = 5;
+  ROMANCE = 6;
 }
 
 enum Status {
-	AVAILABLE = 0;
-	TAKEN = 1;
+  AVAILABLE = 0;
+  TAKEN = 1;
 }
 
 message Book {
-	string ISBN = 1;
-	string title = 2;
-	string author = 3;
-	Genre genre = 4;
-	int32 publishing_year = 5;
+  string ISBN = 1;
+  string title = 2;
+  string author = 3;
+  Genre genre = 4;
+  int32 publishing_year = 5;
 }
 
 message ResponseStatus {
-	int32 code = 1;
-	string message = 2;
+  int32 code = 1;
+  string message = 2;
 }
 
 message CreateBookRequest {
-	Book bookDetail = 1;
+  Book bookDetail = 1;
 }
 
 message CreateBookResponse {
-	ResponseStatus status = 1;
+  ResponseStatus status = 1;
 }
 
 message GetBookRequest {
-	string ISBN = 1;
+  string ISBN = 1;
 }
 
 message GetBookResponse {
-	Book bookDetail = 1;
-	ResponseStatus status = 2;
+  Book bookDetail = 1;
+  ResponseStatus status = 2;
 }
 
 message InventoryItem {
-	int32 inventory_number = 1;
-	oneof item {
-		Book book = 2;
-	}
-	Status status = 3;
+  int32 inventory_number = 1;
+  oneof item {
+    Book book = 2;
+  }
+  Status status = 3;
 }
 
 service InventoryService {
-	rpc GetBook (GetBookRequest) returns (GetBookResponse);
-	rpc CreateBook (CreateBookRequest) returns (CreateBookResponse);
+  rpc GetBook (GetBookRequest) returns (GetBookResponse);
+  rpc CreateBook (CreateBookRequest) returns (CreateBookResponse);
 }
