@@ -16,6 +16,9 @@ from service.bookInventory_pb2 import (
 )
 from service import bookInventory_pb2_grpc
 
+"""
+Key: ISBN, Value: Book
+"""
 books = {
     "978-1-60309-502-0": Book(ISBN="978-1-60309-502-0", title="Animal Stories", author="Peter Hoey", genre=Genre.DRAMA, publishing_year=2022),
     "978-1-60309-454-2": Book(ISBN="978-1-60309-454-2", title="Cosmoknights", author="Hannah Templer", genre=Genre.FANTASY, publishing_year=2021)
