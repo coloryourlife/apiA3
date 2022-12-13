@@ -1,18 +1,18 @@
 syntax = "proto3";
 
 enum Genre {
-		ACTION = 0;
-		COMEDY = 1;
-		DRAMA = 2;
-		FANTASY = 3;
-		HORROR = 4;
-		MYSTERY = 5;
-		ROMANCE = 6;
+	ACTION = 0;
+	COMEDY = 1;
+	DRAMA = 2;
+	FANTASY = 3;
+	HORROR = 4;
+	MYSTERY = 5;
+	ROMANCE = 6;
 }
 
 enum Status {
-		AVAILABLE = 0;
-		TAKEN = 1;
+	AVAILABLE = 0;
+	TAKEN = 1;
 }
 
 message Book {
